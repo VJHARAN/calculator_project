@@ -1,25 +1,35 @@
+// global variables
+let expression='';
+let input='';
+let finalExpression;
 
+
+// function to calculate sum
 function sum(num1,num2){
     total= num1+num2;
-    console.log("Sum= ",total);
+   populateDisplay(total);
 }
 
+// function to calculate difference
 function difference(num1,num2){
     diff= num1-num2;
-    console.log("Difference= ",diff);
+    populateDisplay(diff);
 }
 
+// function to calculate quotient
 function divide(num1,num2){
     quotient= num1/num2;
-    console.log("Quotient= ",quotient);
+    populateDisplay(quotient);
 }
 
+// function to calculate product
 function product(num1,num2){
     prod=num1*num2;
-    console.log("Product= ",prod);
+    populateDisplay(prod);
 }
 
-function operate(operator,num1, num2){
+// function to select type of operation for numbers
+function operate(num1,operator, num2){
     switch(operator){
         case '+': sum(num1,num2);
                     break;
@@ -32,82 +42,60 @@ function operate(operator,num1, num2){
     }
 }
 
+// function to Display input or results
 function populateDisplay(inputVal){
     const display=document.querySelector("input#display");
+    expression+=inputVal;  
+    console.log(expression); 
     // console.log(display);
-    display.value+=inputVal;
-    
+    if (inputVal==="")
+        display.value=inputVal;
+    else 
+       display.value+=inputVal;
 }
 
+//Main function
+function calculator(){
+    // Select number input buttons
+    let buttons=document.querySelectorAll('.input-button button');
+    buttons=Array.from(buttons);
+    buttons.filter(item=> !item.id).forEach((btn)=>{
+        btn.addEventListener('click', (e)=>{
+            let inputVal=e.target.textContent;
+            // console.log(inputVal);
+            populateDisplay(inputVal);
+        }
+        );
+    });
 
-
-
-
-
-
-let buttons=document.querySelectorAll('.input-button button');
-buttons=Array.from(buttons);
-
-buttons.filter(item=> !item.id).forEach((btn)=>{
-    btn.addEventListener('click', (e)=>{
-        let inputVal=e.target.textContent;
-        // console.log(inputVal);
-
-        populateDisplay(inputVal);
-
-        expression+=e.target.textContent;  
-        // console.log(expression);
+    // Select "equal" button
+    const eqaulsBtn=document.querySelector("#result");
+    eqaulsBtn.addEventListener('click',()=>{
         for (item of expression){
             if (!isNaN(item))
                 input+=item;
             else 
-             input +=' '+item+' ';
+            input +=' '+item+' ';
         }
-    }
-    
-    );
-});
+        // console.log(input);
+        finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
+        // console.log(operator,num1,num2)
+        expression='';
+        populateDisplay("");
+        operate(...finalExpression);
+        input='';   // prevent input from appending over in next expression
+        
+    })
 
+    // Select display clear button
+    const clearBtn=document.querySelector("#clear");
+    clearBtn.addEventListener('click',()=>{
+        expression='';
+        populateDisplay("");
+    });
+}
 
+calculator();
 
+ 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const expression=prompt("Input expression: ");
-// console.log(expression);
-let expression='';
-let input='';
-// for (item of expression){
-//     if (!isNaN(item))
-//         input+=item;
-//     else 
-//      input +=' '+item+' ';
-// }
-// console.log(input);
-
-finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
-const [num1,operator,num2]=finalExpression;
-
-// console.log(typeof num1, typeof num2, typeof operator);
-
-operate(operator,num1,num2);
