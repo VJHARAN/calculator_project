@@ -26,8 +26,7 @@ function divide(num1,num2){
     }
     else{
         divByZero=true;
-        populateDisplay("Cannot divide by Zero!");
-        
+        populateDisplay("Cannot divide by Zero!");   
     } 
 }
 
@@ -82,7 +81,7 @@ function calculateFinalExpression(){
         if (!isNaN(item)|| item==='.')
             input+=item;
         else 
-        input +=' '+item+' ';
+            input +=' '+item+' ';
     }
      
     finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
@@ -94,6 +93,15 @@ function calculateFinalExpression(){
 
 //Main function
 function calculator(){
+
+    //Select dot(.) button
+    const dotBtn=document.querySelector("#dotbutton");
+    dotBtn.addEventListener('click',(e)=>{
+        let inputVal=e.target.textContent;
+        populateDisplay(inputVal);
+        dotBtn.disabled=true;
+    });
+
     // Select number input buttons
     let buttons=document.querySelectorAll('.input-button button');
     buttons=Array.from(buttons);
@@ -105,13 +113,14 @@ function calculator(){
                 
                 populateDisplay('');
                 equalBtnFlag=false;
-                populateDisplay(inputVal)
+                populateDisplay(inputVal);
             }
             else{
                 
                 if ( '+-/*'.includes(inputVal))
                 {   equalBtnFlag=false;
                     count+=1;
+                    dotBtn.disabled=false;
                 }
                 if (count===2){ 
                     equalBtnFlag=false;
@@ -120,7 +129,6 @@ function calculator(){
                 }
                 populateDisplay(inputVal)
         }
-       
     });
     });
 
@@ -128,13 +136,15 @@ function calculator(){
     const equalsBtn=document.querySelector("#result");
     equalsBtn.addEventListener('click',()=>{
         equalBtnFlag=true;
+        dotBtn.disabled=false;
+        
         if (count===1){
             count-=1;
             for (item of expression){
                 if (!isNaN(item)|| item==='.')
                     input+=item;
                 else 
-                input +=' '+item+' ';
+                    input +=' '+item+' ';
             }
             
             finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
@@ -155,6 +165,7 @@ function calculator(){
         count=0;
         divByZero=false;
         equalBtnFlag=false;
+        dotBtn.disabled=false;
         populateDisplay("");
     });
 
@@ -167,10 +178,10 @@ function calculator(){
         let remaining=expression.join('');
         populateDisplay('');
         populateDisplay(remaining);
-         
+        dotBtn.disabled=false;
+        
         console.log(expression);
     });
-   
 }
 
 calculator();
