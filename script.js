@@ -97,22 +97,23 @@ function calculator(){
     // Select "equal" button
     const eqaulsBtn=document.querySelector("#result");
     eqaulsBtn.addEventListener('click',()=>{
-        count-=1;
-        for (item of expression){
-            if (!isNaN(item)|| item==='.')
-                input+=item;
-            else 
-             input +=' '+item+' ';
+        if (count===1){
+            count-=1;
+            for (item of expression){
+                if (!isNaN(item)|| item==='.')
+                    input+=item;
+                else 
+                input +=' '+item+' ';
+            }
+            
+            finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
+            
+            expression='';
+            console.log(finalExpression);
+            populateDisplay("");
+            operate(...finalExpression);
+            input='';   // prevent input from appending over in next expression
         }
-         
-        finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
-        
-        expression='';
-        console.log(finalExpression);
-        populateDisplay("");
-        operate(...finalExpression);
-        input='';   // prevent input from appending over in next expression
-      
     })
 
     // Select display clear button
