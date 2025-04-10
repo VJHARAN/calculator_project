@@ -1,7 +1,7 @@
 // global variables
 let expression='';
 let input='';
-let finalExpression;
+let finalExpression='';
 let count=0;
 let divByZero=false;
 let equalBtnFlag=false; // After result, pressing a new digit should clear the result and start.
@@ -26,8 +26,8 @@ function divide(num1,num2){
     }
     else{
         divByZero=true;
-        const display=document.querySelector("input#display");
-        display.value="Cannot divide by Zero!";
+        populateDisplay("Cannot divide by Zero!");
+        
     } 
 }
 
@@ -60,16 +60,24 @@ function operate(num1,operator, num2){
 function populateDisplay(inputVal){
     const display=document.querySelector("input#display");
     if (!divByZero){
-        expression+=inputVal;  
-        // console.log(expression); 
-        if (inputVal==="")
+        if (inputVal===""){
+            expression=inputVal;
             display.value=inputVal;
-        else 
+        }
+        else{
+            expression+=inputVal;
             display.value+=inputVal;
+        }
+        console.log(expression); 
+    }
+    else{
+        display.value=inputVal; // cannot divide by zero
+        divByZero=false;
     }
 }
 
 function calculateFinalExpression(){
+    equalBtnFlag=false;
     for (item of expression){
         if (!isNaN(item)|| item==='.')
             input+=item;
@@ -78,8 +86,7 @@ function calculateFinalExpression(){
     }
      
     finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
-   
-    expression='';
+
     populateDisplay("");
     operate(...finalExpression);
     input='';  
@@ -92,21 +99,28 @@ function calculator(){
     buttons=Array.from(buttons);
     buttons.filter(item=> !item.id).forEach((btn)=>{
         btn.addEventListener('click', (e)=>{
+
             let inputVal=e.target.textContent;
             if(equalBtnFlag && inputVal.match(/\w/g)){
-                expression='';
+                
                 populateDisplay('');
                 equalBtnFlag=false;
+                populateDisplay(inputVal)
             }
             else{
+                
                 if ( '+-/*'.includes(inputVal))
+                {   equalBtnFlag=false;
                     count+=1;
+                }
                 if (count===2){ 
+                    equalBtnFlag=false;
                     calculateFinalExpression();
                     count-=1;
                 }
+                populateDisplay(inputVal)
         }
-        populateDisplay(inputVal);
+       
     });
     });
 
@@ -124,9 +138,8 @@ function calculator(){
             }
             
             finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
-            
-            expression='';
-            // console.log(finalExpression);
+        
+            console.log(finalExpression);
             populateDisplay("");
             operate(...finalExpression);
             input='';   // prevent input from appending over in next expression
@@ -136,10 +149,26 @@ function calculator(){
     // Select display clear button
     const clearBtn=document.querySelector("#clear");
     clearBtn.addEventListener('click',()=>{
-    divByZero=false;
-    expression="";
-    populateDisplay("");
-    
+        expression='';
+        input='';
+        finalExpression='';
+        count=0;
+        divByZero=false;
+        equalBtnFlag=false;
+        populateDisplay("");
+    });
+
+    //Select backspace button
+    const backspaceBtn=document.querySelector('#backspace');
+    backspaceBtn.addEventListener('click',(btn)=>{
+        
+        expression=expression.split('');
+        expression.splice(-1);
+        let remaining=expression.join('');
+        populateDisplay('');
+        populateDisplay(remaining);
+         
+        console.log(expression);
     });
    
 }
