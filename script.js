@@ -2,8 +2,8 @@
 let expression='';
 let input='';
 let finalExpression;
-
-
+let count=0;
+let temp=''
 // function to calculate sum
 function sum(num1,num2){
     total= num1+num2;
@@ -47,13 +47,27 @@ function populateDisplay(inputVal){
     const display=document.querySelector("input#display");
     expression+=inputVal;  
     console.log(expression); 
-    // console.log(display);
     if (inputVal==="")
         display.value=inputVal;
     else 
        display.value+=inputVal;
 }
 
+function calculateFinalExpression(){
+    for (item of expression){
+        if (!isNaN(item))
+            input+=item;
+        else 
+        input +=' '+item+' ';
+    }
+     
+    finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
+   
+    expression='';
+    populateDisplay("");
+    operate(...finalExpression);
+    input='';  
+}
 //Main function
 function calculator(){
     // Select number input buttons
@@ -62,8 +76,14 @@ function calculator(){
     buttons.filter(item=> !item.id).forEach((btn)=>{
         btn.addEventListener('click', (e)=>{
             let inputVal=e.target.textContent;
-            // console.log(inputVal);
+            if ( '+-/*'.includes(inputVal))
+                count+=1;
+            if (count===2){ 
+                calculateFinalExpression();
+                count-=1;
+            }
             populateDisplay(inputVal);
+            console.log(count);
         }
         );
     });
@@ -71,20 +91,22 @@ function calculator(){
     // Select "equal" button
     const eqaulsBtn=document.querySelector("#result");
     eqaulsBtn.addEventListener('click',()=>{
+        count-=1;
         for (item of expression){
             if (!isNaN(item))
                 input+=item;
             else 
             input +=' '+item+' ';
         }
-        // console.log(input);
+         
         finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
-        // console.log(operator,num1,num2)
+        temp=expression;
         expression='';
+       
         populateDisplay("");
         operate(...finalExpression);
         input='';   // prevent input from appending over in next expression
-        
+      
     })
 
     // Select display clear button
