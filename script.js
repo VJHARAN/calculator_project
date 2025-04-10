@@ -109,7 +109,7 @@ function calculator(){
         btn.addEventListener('click', (e)=>{
 
             let inputVal=e.target.textContent;
-            if(equalBtnFlag && inputVal.match(/\w/g)){
+            if(equalBtnFlag && inputVal.match(/[0-9]|\./g)){
                 
                 populateDisplay('');
                 equalBtnFlag=false;
@@ -181,6 +181,23 @@ function calculator(){
         dotBtn.disabled=false;
         
         console.log(expression);
+    });
+
+    const textbox=document.querySelector("#display");
+    textbox.addEventListener('keydown',(e)=>{
+        // console.log(e.key);
+        let inputTxt=e.key.match(/[0-9]|[+-/*]/g);
+        if(e.key.match(/Enter/g)&& expression.match(/[0-9]+[.]?[0-9]*[+-/*]{1}[0-9]+[.]?[0-9]*/g))
+            calculateFinalExpression();
+        else if(e.key.match(/Backspace/g)){
+            expression=expression.split('');
+            expression.splice(-1);
+            expression=expression.join('');
+        }
+        else
+            expression+=inputTxt;    
+        
+        console.log(expression);  
     });
 }
 
