@@ -3,7 +3,7 @@ let expression='';
 let input='';
 let finalExpression;
 let count=0;
- 
+let divByZero=false;
 // function to calculate sum
 function sum(num1,num2){
     let total= checkDecimal(num1+num2);
@@ -18,8 +18,18 @@ function difference(num1,num2){
 
 // function to calculate quotient
 function divide(num1,num2){
-    let quotient= checkDecimal(num1/num2);
-    populateDisplay(quotient);
+    if(isFinite(num1/num2)){ // returns true if not NaN or +_infinity
+        let quotient= checkDecimal(num1/num2);
+        populateDisplay(quotient);
+    }
+    else{
+        divByZero=true;
+        const display=document.querySelector("input#display");
+        display.value="Cannot divide by Zero!";
+        
+
+    }
+    
 }
 
 // function to calculate product
@@ -49,6 +59,7 @@ function operate(num1,operator, num2){
 
 // function to Display input or results
 function populateDisplay(inputVal){
+   if (!divByZero){
     const display=document.querySelector("input#display");
     expression+=inputVal;  
     console.log(expression); 
@@ -56,6 +67,8 @@ function populateDisplay(inputVal){
         display.value=inputVal;
     else 
        display.value+=inputVal;
+   }
+   
 }
 
 function calculateFinalExpression(){
@@ -120,8 +133,11 @@ function calculator(){
     const clearBtn=document.querySelector("#clear");
     clearBtn.addEventListener('click',()=>{
         expression='';
+        divByZero=false;
         populateDisplay("");
+       
     });
+   
 }
 
 calculator();
