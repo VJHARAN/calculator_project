@@ -4,6 +4,8 @@ let input='';
 let finalExpression;
 let count=0;
 let divByZero=false;
+let equalBtnFlag=false; // After result, pressing a new digit should clear the result and start.
+
 // function to calculate sum
 function sum(num1,num2){
     let total= checkDecimal(num1+num2);
@@ -26,10 +28,7 @@ function divide(num1,num2){
         divByZero=true;
         const display=document.querySelector("input#display");
         display.value="Cannot divide by Zero!";
-        
-
-    }
-    
+    } 
 }
 
 // function to calculate product
@@ -59,16 +58,15 @@ function operate(num1,operator, num2){
 
 // function to Display input or results
 function populateDisplay(inputVal){
-   if (!divByZero){
     const display=document.querySelector("input#display");
-    expression+=inputVal;  
-    console.log(expression); 
-    if (inputVal==="")
-        display.value=inputVal;
-    else 
-       display.value+=inputVal;
-   }
-   
+    if (!divByZero){
+        expression+=inputVal;  
+        // console.log(expression); 
+        if (inputVal==="")
+            display.value=inputVal;
+        else 
+            display.value+=inputVal;
+    }
 }
 
 function calculateFinalExpression(){
@@ -95,21 +93,27 @@ function calculator(){
     buttons.filter(item=> !item.id).forEach((btn)=>{
         btn.addEventListener('click', (e)=>{
             let inputVal=e.target.textContent;
-            if ( '+-/*'.includes(inputVal))
-                count+=1;
-            if (count===2){ 
-                calculateFinalExpression();
-                count-=1;
+            if(equalBtnFlag && inputVal.match(/\w/g)){
+                expression='';
+                populateDisplay('');
+                equalBtnFlag=false;
             }
-            populateDisplay(inputVal);
-            console.log(count);
+            else{
+                if ( '+-/*'.includes(inputVal))
+                    count+=1;
+                if (count===2){ 
+                    calculateFinalExpression();
+                    count-=1;
+                }
         }
-        );
+        populateDisplay(inputVal);
+    });
     });
 
     // Select "equal" button
-    const eqaulsBtn=document.querySelector("#result");
-    eqaulsBtn.addEventListener('click',()=>{
+    const equalsBtn=document.querySelector("#result");
+    equalsBtn.addEventListener('click',()=>{
+        equalBtnFlag=true;
         if (count===1){
             count-=1;
             for (item of expression){
@@ -122,7 +126,7 @@ function calculator(){
             finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
             
             expression='';
-            console.log(finalExpression);
+            // console.log(finalExpression);
             populateDisplay("");
             operate(...finalExpression);
             input='';   // prevent input from appending over in next expression
@@ -132,10 +136,10 @@ function calculator(){
     // Select display clear button
     const clearBtn=document.querySelector("#clear");
     clearBtn.addEventListener('click',()=>{
-        expression='';
-        divByZero=false;
-        populateDisplay("");
-       
+    divByZero=false;
+    expression="";
+    populateDisplay("");
+    
     });
    
 }
