@@ -3,43 +3,63 @@ body{
     color:white;
     background-color: #656464;
 }
+
+body, html {
+    height: 100%;
+    background-image:url("./images/bg-img.jpg");
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
 main{
     display: flex;
     justify-content: center;
+
+    
 }
+
 div.main{
+    
     display: flex;
     flex-direction: column;
     align-items:center;
     padding:30px;
     margin:50px;
     gap:20px;
-    border:2px solid red ;
+    border:4px double #142f44 ;
+    border-style:outset;
     border-radius: 24px;
-
-    background-color: #110101;
-
+    background-color: 	#205b7a;
 }
 
 h2{
+    font-size: 50px;
     margin:0px;
 }
+
 button{
     padding:10px;
-    width:70px;
-    border:1.5px solid black;
-    border-radius:8px;
+    width:75px;
+    border:5px solid  #cdcdcd;
+    border-radius:10%;
     font-size:38px;
+    background-color:#a2bbcf;
+    border-style: outset;
 }
 
 #display{
+    text-align: right;
     padding:10px;
     width:300px; 
     height:55px; 
     font-size:60px;
+    border:5px double black;
     border-radius: 8px;
     background-color: rgb(196, 255, 234);
 }
+
 div.title{
     display: flex;
     flex-direction: column;
@@ -50,29 +70,19 @@ div.title{
 div.input-button{
     display:flex;
     gap:10px;
-     
-
 }
 
 div.operator-btn{
     display: flex;
     flex-direction: column;
-    
+    gap:10px;  
+     
 }
 
 div.number-btn{
     display: flex;
     flex-direction: column;
     gap:10px;
-    
-    
-}
-
-div.operator-btn{
-    display: flex;
-    flex-direction: column;
-    gap:10px;
-    justify-content: space-between;
 }
 
 .number, .clear{
@@ -81,14 +91,7 @@ div.operator-btn{
   justify-content: space-between;
 }
 
-.number{
-    justify-content:space-between;
-}
-.number button{
-    padding:10px 20px;
-}
- 
-.genos-font button,.genos-font {
+.genos-font button,.genos-font,h2 {
     font-family: "Genos", sans-serif;
     font-optical-sizing: auto;
     font-weight: 600;
@@ -98,6 +101,7 @@ div.operator-btn{
 .genos-font {
     font-weight: 500;
 }
+
 #dotbutton{
     font-family: 'Courier New', Courier, monospace;
 }

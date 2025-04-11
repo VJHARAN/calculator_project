@@ -132,6 +132,18 @@ function calculator(){
     });
     });
 
+    const allBtn=document.querySelectorAll("button");
+    allBtn.forEach((button)=>{
+        button.addEventListener('mouseover',()=>{
+            button.style.cssText=" border:5px solid#333333; padding:10px; border-style:outset; ";
+            
+        })
+        button.addEventListener('mouseout',()=>{
+            
+            button.style.cssText=" ";
+        })
+    })
+
     // Select "equal" button
     const equalsBtn=document.querySelector("#result");
     equalsBtn.addEventListener('click',()=>{
