@@ -1,0 +1,63 @@
+body{
+    box-sizing: border-box;
+    
+}
+main{
+    display: flex;
+    justify-content: center;
+}
+div.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:30px;
+    margin:50px;
+    gap:20px;
+    border:2px solid ;
+    border-color: black;
+}
+
+h2{
+    margin:0px;
+}
+button{
+    padding:10px;
+    font-size:large;
+    border:1.5px solid black;
+    
+}
+
+div.input-button{
+    display:flex;
+    gap:10px;
+    
+
+}
+
+div.operator-btn{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+div.number-btn{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    
+}
+
+div.operator-btn{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    
+}
+
+.number{
+  display: flex;
+  gap:10px;
+}
+.number button{
+    flex:1;
+}

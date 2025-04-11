@@ -4,34 +4,56 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="./script.js" defer></script>
+        <link rel="stylesheet" href="./styles.css" >
         <title>Calculator</title>
     </head>
     <body>
        <header>
-            <h1>ON-SCREEN CALCULATOR</h1>
+           
        </header> 
        <main>
-            <label for="display">RESULT</label>
-            <input type="textbox" id="display"  >
-            <div class="input-button"style="margin:10px 0px;">
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>0</button>
-                <button id="dotbutton">.</button>
-                <button>+</button>
-                <button>-</button>
-                <button>/</button>
-                <button>*</button>
-                <button id="result">=</button>
-                <button id="backspace">⌫ </button>
-                <button id="clear">clear</button>
+            <div class="main">
+                <h2>CALCULATOR</h2>
+                <!-- <label for="display">RESULT</label> -->
+                <input type="textbox" id="display"  >
+                <div class="input-button" >
+                    <div class="number-btn">
+                        <div class="clear-btn">
+                            <button id="clear">AC</button>
+                            <button id="factorial">x!</button>
+                            <button id="percentage">%</button>
+                        </div>
+                        <div class="number-row1 number">
+                            <button>1</button>
+                            <button>2</button>
+                            <button>3</button>
+                        </div>
+                        <div class="number-row2 number">
+                            <button>4</button>
+                            <button>5</button>
+                            <button>6</button>
+                        </div>
+                        <div class="number-row3 number">
+                            <button>7</button>
+                            <button>8</button>
+                            <button>9</button>
+                        </div>
+                        <div class="number-row4 number">
+                            <button id="dotbutton">.</button>
+                            <button>0</button> 
+                            <button id="result">=</button>
+                        
+                        </div>
+                    </div>
+                    <div class="operator-btn">
+                        <button>+</button>
+                        <button>-</button>
+                        <button>/</button>
+                        <button>*</button>
+                        <button id="backspace">⌫ </button>
+                    </div>
+                    
+                </div>
             </div>
        </main>
        <footer>
