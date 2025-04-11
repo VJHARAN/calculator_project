@@ -1,6 +1,7 @@
 body{
     box-sizing: border-box;
-    
+    color:white;
+    background-color: #656464;
 }
 main{
     display: flex;
@@ -9,12 +10,15 @@ main{
 div.main{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items:center;
     padding:30px;
     margin:50px;
     gap:20px;
-    border:2px solid ;
-    border-color: black;
+    border:2px solid red ;
+    border-radius: 24px;
+
+    background-color: #110101;
+
 }
 
 h2{
@@ -22,15 +26,31 @@ h2{
 }
 button{
     padding:10px;
-    font-size:large;
+    width:70px;
     border:1.5px solid black;
-    
+    border-radius:8px;
+    font-size:38px;
+}
+
+#display{
+    padding:10px;
+    width:300px; 
+    height:55px; 
+    font-size:60px;
+    border-radius: 8px;
+    background-color: rgb(196, 255, 234);
+}
+div.title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
 }
 
 div.input-button{
     display:flex;
     gap:10px;
-    
+     
 
 }
 
@@ -45,19 +65,39 @@ div.number-btn{
     flex-direction: column;
     gap:10px;
     
+    
 }
 
 div.operator-btn{
     display: flex;
     flex-direction: column;
     gap:10px;
-    
+    justify-content: space-between;
+}
+
+.number, .clear{
+  display: flex;
+  gap:10px;
+  justify-content: space-between;
 }
 
 .number{
-  display: flex;
-  gap:10px;
+    justify-content:space-between;
 }
 .number button{
-    flex:1;
+    padding:10px 20px;
+}
+ 
+.genos-font button,.genos-font {
+    font-family: "Genos", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.genos-font {
+    font-weight: 500;
+}
+#dotbutton{
+    font-family: 'Courier New', Courier, monospace;
 }
