@@ -26,7 +26,7 @@ function divide(num1,num2){
     }
     else{
         divByZero=true;
-        populateDisplay("Cannot divide by Zero!");   
+        populateDisplay("Error!");   
     } 
 }
 
@@ -67,7 +67,7 @@ function populateDisplay(inputVal){
             expression+=inputVal;
             display.value+=inputVal;
         }
-        console.log(expression); 
+        // console.log(expression); 
     }
     else{
         display.value=inputVal; // cannot divide by zero
@@ -107,7 +107,7 @@ function calculator(){
     buttons=Array.from(buttons);
     buttons.filter(item=> !item.id).forEach((btn)=>{
         btn.addEventListener('click', (e)=>{
-
+           
             let inputVal=e.target.textContent;
             if(equalBtnFlag && inputVal.match(/[0-9]|\./g)){
                 
@@ -161,7 +161,7 @@ function calculator(){
             
             finalExpression=input.split(' ').map(item=>isNaN(item)?item:+item);
         
-            console.log(finalExpression);
+            // console.log(finalExpression);
             populateDisplay("");
             operate(...finalExpression);
             input='';   // prevent input from appending over in next expression
@@ -179,6 +179,7 @@ function calculator(){
         equalBtnFlag=false;
         dotBtn.disabled=false;
         populateDisplay("");
+        
     });
 
     //Select backspace button
@@ -186,34 +187,65 @@ function calculator(){
     backspaceBtn.addEventListener('click',(btn)=>{
         
         expression=expression.split('');
-        expression.splice(-1);
+        let val=expression.splice(-1);
+        if ('+-/*'.includes(val))
+            count-=1;
         let remaining=expression.join('');
         populateDisplay('');
         populateDisplay(remaining);
         dotBtn.disabled=false;
         
-        console.log(expression);
+        // console.log(expression);
     });
 
+    //Add keyboard support
     const textbox=document.querySelector("#display");
-    textbox.addEventListener('keydown',(e)=>{
+    textbox.addEventListener('keyup',(e)=>{
         // console.log(e.key);
         let inputTxt=e.key.match(/[0-9]|[+-/*]/g);
-        if(e.key.match(/Enter/g)&& expression.match(/[0-9]+[.]?[0-9]*[+-/*]{1}[0-9]+[.]?[0-9]*/g))
-            calculateFinalExpression();
-        else if(e.key.match(/Backspace/g)){
-            expression=expression.split('');
-            expression.splice(-1);
-            expression=expression.join('');
+        if ( '+-/*'.includes(inputTxt)){   
+            count+=1;
         }
-        else
-            expression+=inputTxt;    
-        
-        console.log(expression);  
+        if (count===2){ 
+            calculateFinalExpression();
+            populateDisplay(inputTxt);
+            count-=1;
+        }
+        else{
+            if(e.key.match(/Enter/g)&& expression.match(/([0-9]+[.]?[0-9]*[+-/*]{1}[0-9]+[.]?[0-9]*)/g)){
+                calculateFinalExpression();
+                // console.log(expression);
+                count-=1;
+            }
+            else if(e.key.match(/Backspace/g)){
+                expression=expression.split('');
+                expression.splice(-1);
+                expression=expression.join('');
+            }
+            else if(!inputTxt){
+                expression='';
+                input='';
+                finalExpression='';
+                count=0;
+                divByZero=false;
+                equalBtnFlag=false;
+                dotBtn.disabled=false;
+                document.querySelector("input#display").value="";
+                populateDisplay("Error!");
+            }
+            else{   
+                expression+=inputTxt;    
+            }
+        }
     });
+
+    window.onload = function() {
+        document.querySelector("#display").focus();
+      }
 }
 
 calculator();
 
- 
+ //unable to add continuoes stream of data using keyboard 
+ //eg: 1+2+34-7 shows only 1+2 ie 3.
 
