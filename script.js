@@ -36,6 +36,12 @@ function product(num1,num2){
     populateDisplay(prod);
 }
 
+// function to calculate percentage
+function percentage(num1,num2){
+    let percent=(num1*num2)/100;
+    populateDisplay(percent);
+}
+
 //function to check if a number has a decimal place/is a whole number
 function checkDecimal(num){
     return num%1!=0? (+(num.toFixed(4))):num; //Round string to 4 decimal places & return as number.    
@@ -52,6 +58,7 @@ function operate(num1,operator, num2){
                     break;
         case '*': product(num1,num2);
                     break;
+        case '%': percentage(num1,num2);             
     }
 }
 
@@ -117,7 +124,7 @@ function calculator(){
             }
             else{
                 
-                if ( '+-/*'.includes(inputVal))
+                if ( '+-/*%'.includes(inputVal))
                 {   equalBtnFlag=false;
                     count+=1;
                     dotBtn.disabled=false;
@@ -188,7 +195,7 @@ function calculator(){
         
         expression=expression.split('');
         let val=expression.splice(-1);
-        if ('+-/*'.includes(val))
+        if ('+-/*%'.includes(val))
             count-=1;
         let remaining=expression.join('');
         populateDisplay('');
@@ -201,40 +208,48 @@ function calculator(){
     //Add keyboard support
     const textbox=document.querySelector("#display");
     textbox.addEventListener('keyup',(e)=>{
-        // console.log(e.key);
-        let inputTxt=e.key.match(/[0-9]|[+-/*]/g);
-        if ( '+-/*'.includes(inputTxt)){   
-            count+=1;
+        //  console.log(e.key);
+        if (e.key.match(/Shift/g)){
+            ;  //passiton   
         }
-        if (count===2){ 
-            calculateFinalExpression();
-            populateDisplay(inputTxt);
-            count-=1;
-        }
-        else{
-            if(e.key.match(/Enter/g)&& expression.match(/([0-9]+[.]?[0-9]*[+-/*]{1}[0-9]+[.]?[0-9]*)/g)){
+        else {
+            let inputTxt=e.key.match(/[0-9]|[+-/*%]/g);
+            if ( '+-/*%'.includes(inputTxt)){   
+                count+=1;
+            }
+            if (count===2){ 
                 calculateFinalExpression();
-                // console.log(expression);
+                populateDisplay(inputTxt);
                 count-=1;
             }
-            else if(e.key.match(/Backspace/g)){
-                expression=expression.split('');
-                expression.splice(-1);
-                expression=expression.join('');
-            }
-            else if(!inputTxt){
-                expression='';
-                input='';
-                finalExpression='';
-                count=0;
-                divByZero=false;
-                equalBtnFlag=false;
-                dotBtn.disabled=false;
-                document.querySelector("input#display").value="";
-                populateDisplay("Error!");
-            }
-            else{   
-                expression+=inputTxt;    
+            else{
+                if(e.key.match(/Enter/g)&& expression.match(/([0-9]+[.]?[0-9]*[+-/*%]{1}[0-9]+[.]?[0-9]*)/g)){
+                    calculateFinalExpression();
+                    // console.log(expression);
+                    count-=1;
+                }
+                else if(e.key.match(/Backspace/g)){
+                    expression=expression.split('');
+                    expression.splice(-1);
+                    expression=expression.join('');
+                }
+                else if(!inputTxt){
+                    expression='';
+                    input='';
+                    finalExpression='';
+                    count=0;
+                    divByZero=false;
+                    equalBtnFlag=false;
+                    dotBtn.disabled=false;
+                    document.querySelector("input#display").value="";
+                    populateDisplay("Error!");
+                }
+               
+                else{   
+                    expression+=inputTxt; 
+                    console.log(expression)  
+                    
+                }
             }
         }
     });
@@ -243,10 +258,8 @@ function calculator(){
         document.querySelector("#display").focus();
       }
 
-
-
-     
    
+    //Shrink input text size if overflow occurs 
     var myInput = document.querySelector('input#display');
     myInput.addEventListener('keypress',changeFontSize);
     myInput.addEventListener('change',changeFontSize);
