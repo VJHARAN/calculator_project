@@ -42,6 +42,13 @@ function percentage(num1,num2){
     populateDisplay(percent);
 }
 
+function factorial(num){
+    if(num===0 || num===1)
+        return 1;
+    else
+        return num*factorial(num-1);
+}
+
 //function to check if a number has a decimal place/is a whole number
 function checkDecimal(num){
     return num%1!=0? (+(num.toFixed(4))):num; //Round string to 4 decimal places & return as number.    
@@ -59,6 +66,9 @@ function operate(num1,operator, num2){
         case '*': product(num1,num2);
                     break;
         case '%': percentage(num1,num2);             
+                    break;
+        case '!': let fact=factorial(num1);
+                    populateDisplay(fact);
     }
 }
 
@@ -114,8 +124,12 @@ function calculator(){
     buttons=Array.from(buttons);
     buttons.filter(item=> !item.id).forEach((btn)=>{
         btn.addEventListener('click', (e)=>{
-           
-            let inputVal=e.target.textContent;
+            let inputVal;
+            if (btn.value==='factorial'){
+                    inputVal='!';
+            }
+            else
+                inputVal=e.target.textContent;
             if(equalBtnFlag && inputVal.match(/[0-9]|\./g)){
                 
                 populateDisplay('');
@@ -124,7 +138,7 @@ function calculator(){
             }
             else{
                 
-                if ( '+-/*%'.includes(inputVal))
+                if ( '+-/*%!'.includes(inputVal))
                 {   equalBtnFlag=false;
                     count+=1;
                     dotBtn.disabled=false;
@@ -195,7 +209,7 @@ function calculator(){
         
         expression=expression.split('');
         let val=expression.splice(-1);
-        if ('+-/*%'.includes(val))
+        if ('+-/*%!'.includes(val))
             count-=1;
         let remaining=expression.join('');
         populateDisplay('');
@@ -213,9 +227,12 @@ function calculator(){
             ;  //passiton   
         }
         else {
-            let inputTxt=e.key.match(/[0-9]|[+-/*%]/g);
-            if ( '+-/*%'.includes(inputTxt)){   
+            let inputTxt=e.key.match(/[0-9]|[+-/*%!]/g);
+            if ( '+-/*%!'.includes(inputTxt)){  
                 count+=1;
+                if (inputTxt==='!'){
+                        count-=1;
+                }
             }
             if (count===2){ 
                 calculateFinalExpression();
@@ -227,6 +244,9 @@ function calculator(){
                     calculateFinalExpression();
                     // console.log(expression);
                     count-=1;
+                }
+                else if (e.key.match(/Enter/g)&& expression.match(/[0-9]+[!]/g)){ //match factorial
+                    calculateFinalExpression();
                 }
                 else if(e.key.match(/Backspace/g)){
                     expression=expression.split('');
