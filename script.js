@@ -242,6 +242,35 @@ function calculator(){
     window.onload = function() {
         document.querySelector("#display").focus();
       }
+
+
+
+     
+   
+    var myInput = document.querySelector('input#display');
+    myInput.addEventListener('keypress',changeFontSize);
+    myInput.addEventListener('change',changeFontSize);
+
+    function changeFontSize() {
+        if(isOverflown(myInput)) {
+            while (isOverflown(myInput)){
+                currentFontSize--;
+                myInput.style.fontSize = currentFontSize + 'px';
+            }
+        }
+        else {
+            currentFontSize =60;
+            myInput.style.fontSize = currentFontSize + 'px';
+            while (isOverflown(myInput)){
+                currentFontSize--;
+                myInput.style.fontSize = currentFontSize + 'px';
+            }
+        }	
+    }
+    function isOverflown(element) {
+        return element.scrollWidth > element.clientWidth;
+        
+    }
 }
 
 calculator();
